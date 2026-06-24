@@ -1,11 +1,24 @@
 import type { Metadata } from 'next';
 import { getSettings, getService, getProject, getServices, getProjects } from '@/lib/data';
-export const dynamic = 'force-dynamic';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ServiceSidebar from '@/components/ServiceSidebar';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  try {
+    const [services, projects] = await Promise.all([getServices(), getProjects()]);
+    return [
+      ...services.map((s) => ({ slug: s.slug })),
+      ...projects.map((p) => ({ slug: p.slug })),
+    ];
+  } catch {
+    return [];
+  }
+}
 
 export async function generateMetadata({
   params,
