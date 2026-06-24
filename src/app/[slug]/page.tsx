@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getSettings, getService, getProject, getServices, getProjects } from '@/lib/data';
+export const dynamic = 'force-dynamic';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ServiceSidebar from '@/components/ServiceSidebar';

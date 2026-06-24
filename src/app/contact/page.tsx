@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
 
+export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Contact | SOTIP-CI',
   description: "Contactez SOTIP-CI pour vos projets de construction métallique, charpenterie, chaudronnerie et maintenance industrielle en Côte d'Ivoire.",

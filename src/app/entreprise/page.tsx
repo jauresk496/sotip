@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollReveal from '@/components/ScrollReveal';
 
+export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Entreprise | SOTIP-CI',
   description: "SOTIP-CI (Société de Travaux Industriels et de Prestation de Côte d'Ivoire) : construction métallique, charpenterie, chaudronnerie, génie civil et maintenance industrielle.",

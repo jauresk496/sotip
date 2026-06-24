@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import ScrollReveal from '@/components/ScrollReveal';
 import { PROJECT_ORDER } from '@/types';
 
+export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Projets réalisés | SOTIP-CI',
   description: "Découvrez les projets réalisés par SOTIP-CI : construction métallique, charpenterie, chaudronnerie, génie civil et maintenance industrielle en Côte d'Ivoire.",
