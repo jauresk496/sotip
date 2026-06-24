@@ -7,14 +7,6 @@ import ServiceSidebar from '@/components/ServiceSidebar';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export async function generateStaticParams() {
-  const [services, projects] = await Promise.all([getServices(), getProjects()]);
-  return [
-    ...services.map((s) => ({ slug: s.slug })),
-    ...projects.map((p) => ({ slug: p.slug })),
-  ];
-}
-
 export async function generateMetadata({
   params,
 }: {
