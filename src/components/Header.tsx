@@ -1,15 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { SERVICE_LIST } from '@/types';
+import { useState, useEffect } from 'react';
 
 export default function Header({ settings }: { settings: Record<string, string> }) {
+  const pathname = usePathname();
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const pathname = usePathname();
 
   const contactPhone = settings.contact_phone || '+225 07 48 26 95 74';
   const contactEmail = settings.contact_email || 'info@sotipci.net';
@@ -17,29 +15,16 @@ export default function Header({ settings }: { settings: Record<string, string> 
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const isActive = (page: string) => {
-    if (page === 'accueil') return pathname === '/';
-    if (page === 'presentation') return pathname === '/entreprise' || pathname === '/manager';
-    if (page === 'activite') return SERVICE_LIST.some((s) => pathname === `/${s.slug}`);
-    if (page === 'projets') return pathname === '/proj_real' || SERVICE_LIST.some(() => false);
-    if (page === 'contact') return pathname === '/contact';
-    return false;
+  const isActive = (path: string) => {
+    if (path === '/') return pathname === '/';
+    return pathname.startsWith(path);
   };
 
-  const isProjectPage = () => {
-    const projectSlugs = ['carbone', 'green', 'onomo', 'radisson'];
-    return projectSlugs.some((s) => pathname === `/${s}`);
-  };
-
-  const toggleDropdown = (name: string) => {
-    if (window.innerWidth <= 768) {
-      setOpenDropdown(openDropdown === name ? null : name);
-    }
-  };
+  const isPresentation = isActive('/entreprise') || isActive('/manager');
 
   return (
     <>
@@ -65,60 +50,40 @@ export default function Header({ settings }: { settings: Record<string, string> 
           <nav className={`nav${navOpen ? ' open' : ''}`} id="mainNav">
             <Link
               href="/"
-              className={isActive('accueil') ? 'active' : ''}
+              className={pathname === '/' ? 'active' : ''}
               onClick={() => setNavOpen(false)}
             >
               Accueil
             </Link>
-            <div className={`has-dropdown${openDropdown === 'presentation' ? ' open' : ''}`}>
-              <a
+            <div className={`has-dropdown${isPresentation ? ' open' : ''}`}>
+              <Link
                 href="/entreprise"
-                className={isActive('presentation') ? 'active' : ''}
-                onClick={(e) => {
-                  if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    toggleDropdown('presentation');
-                  }
-                }}
+                className={isPresentation ? 'active' : ''}
               >
                 Présentation
-              </a>
+              </Link>
               <div className="dropdown">
                 <Link href="/entreprise" onClick={() => setNavOpen(false)}>Entreprise</Link>
                 <Link href="/manager" onClick={() => setNavOpen(false)}>Manager</Link>
               </div>
             </div>
-            <div className={`has-dropdown${openDropdown === 'activite' ? ' open' : ''}`}>
-              <a
-                href="/construction-metallique"
-                className={isActive('activite') ? 'active' : ''}
-                onClick={(e) => {
-                  if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    toggleDropdown('activite');
-                  }
-                }}
-              >
-                Activités
-              </a>
-              <div className="dropdown">
-                {SERVICE_LIST.map((s) => (
-                  <Link key={s.slug} href={`/${s.slug}`} onClick={() => setNavOpen(false)}>
-                    {s.title}
-                  </Link>
-                ))}
-              </div>
-            </div>
+            <Link
+              href="/activites"
+              className={isActive('/activites') || isActive('/construction-metallique') ? 'active' : ''}
+              onClick={() => setNavOpen(false)}
+            >
+              Activités
+            </Link>
             <Link
               href="/proj_real"
-              className={isActive('projets') || isProjectPage() ? 'active' : ''}
+              className={isActive('/proj_real') || isActive('/green') ? 'active' : ''}
               onClick={() => setNavOpen(false)}
             >
               Réalisations
             </Link>
             <Link
               href="/contact"
-              className={isActive('contact') ? 'active' : ''}
+              className={isActive('/contact') ? 'active' : ''}
               onClick={() => setNavOpen(false)}
             >
               Contact
