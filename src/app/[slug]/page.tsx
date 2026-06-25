@@ -1,42 +1,17 @@
 import type { Metadata } from 'next';
-import { getSettings, getService, getProject, getServices, getProjects } from '@/lib/data';
+import { getSettings, getService, getProject, getProjects } from '@/lib/data';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ServiceSidebar from '@/components/ServiceSidebar';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export const dynamicParams = true;
+export const dynamic = 'force-dynamic';
 
-export async function generateStaticParams() {
-  try {
-    const [services, projects] = await Promise.all([getServices(), getProjects()]);
-    return [
-      ...services.map((s) => ({ slug: s.slug })),
-      ...projects.map((p) => ({ slug: p.slug })),
-    ];
-  } catch {
-    return [];
-  }
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const [service, project] = await Promise.all([
-    getService(params.slug),
-    getProject(params.slug),
-  ]);
-  if (service) {
-    return { title: `${service.title} | SOTIP-CI`, description: service.intro };
-  }
-  if (project) {
-    return { title: `${project.page_title} | SOTIP-CI`, description: project.description };
-  }
-  return { title: 'Page | SOTIP-CI' };
-}
+export const metadata: Metadata = {
+  title: 'Détail | SOTIP-CI',
+  description: 'Société de Travaux Industriels et de Prestation de Côte d\'Ivoire',
+};
 
 export default async function DynamicPage({
   params,
