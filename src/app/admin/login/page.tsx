@@ -1,12 +1,20 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showSetup, setShowSetup] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/admin/check-setup")
+      .then((r) => r.json())
+      .then((d) => setShowSetup(!d.configured))
+      .catch(() => setShowSetup(false));
+  }, []);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -61,8 +69,12 @@ export default function AdminLoginPage() {
         </div>
         <div className="login-back">
           <a href="/">&larr; Retour au site</a>
-          <span style={{ margin: "0 8px", color: "#ccc" }}>|</span>
-          <a href="/admin/setup">Première connexion ?</a>
+          {showSetup && (
+            <>
+              <span style={{ margin: "0 8px", color: "#ccc" }}>|</span>
+              <a href="/admin/setup">Première connexion ?</a>
+            </>
+          )}
         </div>
       </div>
     </div>
