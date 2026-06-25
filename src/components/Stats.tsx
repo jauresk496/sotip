@@ -13,24 +13,26 @@ export default function Stats() {
   return (
     <div className="stats-grid">
       {stats.map((stat, i) => (
-        <StatItem key={i} count={stat.count} label={stat.label} delay={i * 100} />
+        <StatItem key={i} count={stat.count} label={stat.label} />
       ))}
     </div>
   );
 }
 
-function StatItem({ count, label, delay }: { count: number; label: string; delay: number }) {
+function StatItem({ count, label }: { count: number; label: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [display, setDisplay] = useState(0);
+  const animated = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || animated.current) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            animated.current = true;
             const duration = 2000;
             const start = performance.now();
             const animate = (now: number) => {
@@ -40,17 +42,17 @@ function StatItem({ count, label, delay }: { count: number; label: string; delay
               setDisplay(Math.floor(eased * count));
               if (progress < 1) requestAnimationFrame(animate);
             };
-            setTimeout(() => requestAnimationFrame(animate), delay);
+            requestAnimationFrame(animate);
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [count, delay]);
+  }, [count]);
 
   return (
     <div className="stat-item" ref={ref}>

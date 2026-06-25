@@ -43,14 +43,14 @@ export default async function HomePage() {
                   <p>Charpentes, bâtiments industriels, ponts et structures métalliques sur mesure</p>
                 </div>
               </ScrollReveal>
-              <ScrollReveal delay={100}>
+              <ScrollReveal>
                 <div className="feature-item">
                   <div className="feature-icon">&#9881;</div>
                   <h3>Chaudronnerie &amp; Tuyauterie</h3>
                   <p>Cuves, réservoirs, échangeurs et réseaux de canalisations industrielles</p>
                 </div>
               </ScrollReveal>
-              <ScrollReveal delay={200}>
+              <ScrollReveal>
                 <div className="feature-item">
                   <div className="feature-icon">&#9881;</div>
                   <h3>Maintenance Industrielle</h3>
@@ -71,8 +71,8 @@ export default async function HomePage() {
               </div>
             </ScrollReveal>
             <div className="services-grid">
-              {HOME_SERVICE_CARDS.map((card, i) => (
-                <ScrollReveal key={card.slug} delay={i > 0 ? Math.min(i, 4) * 100 : 0}>
+              {HOME_SERVICE_CARDS.map((card) => (
+                <ScrollReveal key={card.slug}>
                   <div className="service-card">
                     <img src={card.img} alt={card.title} loading="lazy" />
                     <div className="service-card-body">

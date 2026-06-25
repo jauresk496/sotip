@@ -82,14 +82,14 @@ export default async function EntreprisePage() {
                   <p>Respect des normes internationales et contrôle rigoureux à chaque étape de nos réalisations.</p>
                 </div>
               </ScrollReveal>
-              <ScrollReveal delay={100}>
+              <ScrollReveal>
                 <div className="feature-item">
                   <div className="feature-icon">&#128737;</div>
                   <h3>Sécurité</h3>
                   <p>Une culture sécurité ancrée dans nos processus pour protéger nos équipes et vos installations.</p>
                 </div>
               </ScrollReveal>
-              <ScrollReveal delay={200}>
+              <ScrollReveal>
                 <div className="feature-item">
                   <div className="feature-icon">&#128339;</div>
                   <h3>Respect des délais</h3>

@@ -22,21 +22,17 @@ export default function ScrollReveal({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            if (delay) {
-              setTimeout(() => setVisible(true), delay);
-            } else {
-              setVisible(true);
-            }
+            setVisible(true);
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.10, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.05 }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [delay]);
+  }, []);
 
   return (
     <div ref={ref} className={`reveal${visible ? ' visible' : ''} ${className}`}>
