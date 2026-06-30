@@ -1,4 +1,4 @@
-import { getSettings, getProjects, getPartners, getGallery } from '@/lib/data';
+import { getSettings, getProjects, getPartners, getGallery, getSlides } from '@/lib/data';
 export const dynamic = 'force-dynamic';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -11,11 +11,12 @@ import { PROJECT_ORDER } from '@/types';
 import type { GalleryItem } from '@/types';
 
 export default async function HomePage() {
-  const [settings, projects, partners, gallery] = await Promise.all([
+  const [settings, projects, partners, gallery, slides] = await Promise.all([
     getSettings(),
     getProjects(),
     getPartners(),
     getGallery(),
+    getSlides(),
   ]);
 
   const orderedProjects = PROJECT_ORDER
@@ -26,7 +27,7 @@ export default async function HomePage() {
     <>
       <Header settings={settings} />
       <main>
-        <Hero />
+        <Hero slides={slides} />
 
         <section className="section">
           <div className="container">

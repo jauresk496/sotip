@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { Service, Project, Partner, Settings, GalleryItem } from '@/types';
+import type { Service, Project, Partner, Settings, GalleryItem, SlideItem } from '@/types';
 
 export async function getSettings(): Promise<Settings> {
   const { data, error } = await supabase.from('settings').select('key, value');
@@ -75,4 +75,13 @@ export async function getGallery(): Promise<GalleryItem[]> {
     .order('sort_order', { ascending: true });
   if (error || !data) return [];
   return data as GalleryItem[];
+}
+
+export async function getSlides(): Promise<SlideItem[]> {
+  const { data, error } = await supabase
+    .from('slides')
+    .select('*')
+    .order('sort_order', { ascending: true });
+  if (error || !data) return [];
+  return data as SlideItem[];
 }

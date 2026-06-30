@@ -4,28 +4,31 @@ import { useEffect, useState } from "react";
 import AdminShell from "@/components/AdminShell";
 
 export default function AdminDashboardPage() {
-  const [stats, setStats] = useState({ services: 0, projects: 0, gallery: 0, partners: 0, settings: 0 });
+  const [stats, setStats] = useState({ services: 0, projects: 0, gallery: 0, slides: 0, partners: 0, settings: 0 });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       try {
-        const [sRes, pRes, gRes, ptRes, stRes] = await Promise.all([
+        const [sRes, pRes, gRes, slRes, ptRes, stRes] = await Promise.all([
           fetch("/api/admin/services"),
           fetch("/api/admin/projects"),
           fetch("/api/admin/gallery"),
+          fetch("/api/admin/slides"),
           fetch("/api/admin/partners"),
           fetch("/api/admin/settings"),
         ]);
         const services = await sRes.json();
         const projects = await pRes.json();
         const gallery = await gRes.json();
+        const slides = await slRes.json();
         const partners = await ptRes.json();
         const settings = await stRes.json();
         setStats({
           services: Array.isArray(services) ? services.length : 0,
           projects: Array.isArray(projects) ? projects.length : 0,
           gallery: Array.isArray(gallery) ? gallery.length : 0,
+          slides: Array.isArray(slides) ? slides.length : 0,
           partners: Array.isArray(partners) ? partners.length : 0,
           settings: typeof settings === "object" && !Array.isArray(settings) ? Object.keys(settings).length : 0,
         });
@@ -39,6 +42,7 @@ export default function AdminDashboardPage() {
     { label: "Services", count: stats.services, icon: "bi-tools", color: "#143c50" },
     { label: "Projets", count: stats.projects, icon: "bi-folder2-open", color: "#a0c83c" },
     { label: "Galerie", count: stats.gallery, icon: "bi-images", color: "#1e5a78" },
+    { label: "Slides", count: stats.slides, icon: "bi-card-image", color: "#143c50" },
     { label: "Partenaires", count: stats.partners, icon: "bi-people", color: "#8ab32e" },
   ];
 

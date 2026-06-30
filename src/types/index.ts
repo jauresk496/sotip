@@ -35,6 +35,13 @@ export interface GalleryItem {
   sort_order: number;
 }
 
+export interface SlideItem {
+  id: string;
+  image: string;
+  title: string;
+  sort_order: number;
+}
+
 export interface Settings {
   [key: string]: string;
 }

@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import type { SlideItem } from '@/types';
 import { HERO_SLIDES } from '@/types';
 
-export default function Hero() {
+export default function Hero({ slides: propSlides }: { slides?: SlideItem[] }) {
   const [current, setCurrent] = useState(0);
-  const slides = HERO_SLIDES;
+  const slides = propSlides && propSlides.length > 0
+    ? propSlides.map((s) => s.image)
+    : HERO_SLIDES;
 
   useEffect(() => {
     if (slides.length <= 1) return;

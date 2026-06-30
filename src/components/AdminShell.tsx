@@ -38,6 +38,7 @@ export default function AdminShell({ children }: AdminShellProps) {
     { href: "/admin/services", label: "Services", icon: "bi-tools" },
     { href: "/admin/projects", label: "Projets", icon: "bi-folder2-open" },
     { href: "/admin/gallery", label: "Galerie", icon: "bi-images" },
+    { href: "/admin/slides", label: "Slides", icon: "bi-card-image" },
     { href: "/admin/partners", label: "Partenaires", icon: "bi-people" },
   ];
 
@@ -86,6 +87,9 @@ export default function AdminShell({ children }: AdminShellProps) {
           </Link>
           <Link href="/admin/gallery" className={`tb-tab${isActive("/admin/gallery") ? " active" : ""}`}>
             Galerie
+          </Link>
+          <Link href="/admin/slides" className={`tb-tab${isActive("/admin/slides") ? " active" : ""}`}>
+            Slides
           </Link>
         </nav>
         <div className="tb-right">
