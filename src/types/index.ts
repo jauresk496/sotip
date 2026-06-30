@@ -28,6 +28,13 @@ export interface Partner {
   sort_order: number;
 }
 
+export interface GalleryItem {
+  id: string;
+  title: string;
+  image: string;
+  sort_order: number;
+}
+
 export interface Settings {
   [key: string]: string;
 }

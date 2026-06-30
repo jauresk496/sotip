@@ -2,6 +2,7 @@
 
 import { useState, useEffect, FormEvent } from "react";
 import AdminShell from "@/components/AdminShell";
+import ImageUpload from "@/components/ImageUpload";
 
 interface ProjectItem {
   slug: string;
@@ -24,6 +25,8 @@ export default function AdminProjectsPage() {
   const [msg, setMsg] = useState("");
   const [error, setError] = useState("");
   const [editing, setEditing] = useState<Partial<ProjectItem> | null>(null);
+  const [cardImage, setCardImage] = useState("");
+  const [mainImage, setMainImage] = useState("");
 
   async function load() {
     try {
@@ -39,10 +42,14 @@ export default function AdminProjectsPage() {
   useEffect(() => { load(); }, []);
 
   function openCreate() {
+    setCardImage("");
+    setMainImage("");
     setEditing({ slug: "", title: "", page_title: "", description: "", card_image: "", main_image: "", year: "", content: [], sidebar_title: "", sidebar_slug: "", sort_order: 0 });
   }
 
   function openEdit(item: ProjectItem) {
+    setCardImage(item.card_image || "");
+    setMainImage(item.main_image || "");
     setEditing({ ...item });
   }
 
@@ -59,8 +66,8 @@ export default function AdminProjectsPage() {
       title: form.get("title") as string,
       page_title: (form.get("page_title") as string) || "",
       description: (form.get("description") as string) || "",
-      card_image: (form.get("card_image") as string) || null,
-      main_image: (form.get("main_image") as string) || null,
+      card_image: cardImage || null,
+      main_image: mainImage || null,
       year: (form.get("year") as string) || "",
       content: rawContent ? rawContent.split("\n").map(l => l.trim()).filter(Boolean) : [],
       sidebar_title: (form.get("sidebar_title") as string) || "",
@@ -159,13 +166,11 @@ export default function AdminProjectsPage() {
                     <textarea name="content" className="form-control" rows={5} defaultValue={(editing.content || []).join("\n")} />
                   </div>
                   <div style={{ display: "flex", gap: ".8rem", flexWrap: "wrap" }}>
-                    <div style={{ flex: 1 }}>
-                      <label className="form-label">Image de carte</label>
-                      <input type="text" name="card_image" className="form-control" defaultValue={editing.card_image || ""} />
+                    <div style={{ flex: 1, minWidth: 250 }}>
+                      <ImageUpload name="card_image" value={cardImage} onChange={setCardImage} label="Image de carte" />
                     </div>
-                    <div style={{ flex: 1 }}>
-                      <label className="form-label">Image principale</label>
-                      <input type="text" name="main_image" className="form-control" defaultValue={editing.main_image || ""} />
+                    <div style={{ flex: 1, minWidth: 250 }}>
+                      <ImageUpload name="main_image" value={mainImage} onChange={setMainImage} label="Image principale" />
                     </div>
                   </div>
                   <div style={{ display: "flex", gap: ".8rem", flexWrap: "wrap" }}>

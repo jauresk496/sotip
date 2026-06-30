@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { Service, Project, Partner, Settings } from '@/types';
+import type { Service, Project, Partner, Settings, GalleryItem } from '@/types';
 
 export async function getSettings(): Promise<Settings> {
   const { data, error } = await supabase.from('settings').select('key, value');
@@ -66,4 +66,13 @@ export async function getAllServiceSlugs(): Promise<string[]> {
 export async function getAllProjectSlugs(): Promise<string[]> {
   const projects = await getProjects();
   return projects.map((p) => p.slug);
+}
+
+export async function getGallery(): Promise<GalleryItem[]> {
+  const { data, error } = await supabase
+    .from('gallery')
+    .select('*')
+    .order('sort_order', { ascending: true });
+  if (error || !data) return [];
+  return data as GalleryItem[];
 }

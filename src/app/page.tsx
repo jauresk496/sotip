@@ -1,4 +1,4 @@
-import { getSettings, getProjects, getPartners } from '@/lib/data';
+import { getSettings, getProjects, getPartners, getGallery } from '@/lib/data';
 export const dynamic = 'force-dynamic';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -7,13 +7,15 @@ import ScrollReveal from '@/components/ScrollReveal';
 import Stats from '@/components/Stats';
 import Partners from '@/components/Partners';
 import Link from 'next/link';
-import { HOME_SERVICE_CARDS, PROJECT_ORDER } from '@/types';
+import { PROJECT_ORDER } from '@/types';
+import type { GalleryItem } from '@/types';
 
 export default async function HomePage() {
-  const [settings, projects, partners] = await Promise.all([
+  const [settings, projects, partners, gallery] = await Promise.all([
     getSettings(),
     getProjects(),
     getPartners(),
+    getGallery(),
   ]);
 
   const orderedProjects = PROJECT_ORDER
@@ -30,60 +32,25 @@ export default async function HomePage() {
           <div className="container">
             <ScrollReveal>
               <div className="section-title">
-                <h2>Notre Expertise</h2>
+                <h2>Galerie de nos réalisations</h2>
                 <div className="line"></div>
-                <p>Une équipe d'ingénieurs et techniciens qualifiés pour vos projets industriels</p>
+                <p>Découvrez nos réalisations en images</p>
               </div>
             </ScrollReveal>
-            <div className="features-grid">
-              <ScrollReveal>
-                <div className="feature-item">
-                  <div className="feature-icon">&#9881;</div>
-                  <h3>Construction Métallique</h3>
-                  <p>Charpentes, bâtiments industriels, ponts et structures métalliques sur mesure</p>
-                </div>
-              </ScrollReveal>
-              <ScrollReveal>
-                <div className="feature-item">
-                  <div className="feature-icon">&#9881;</div>
-                  <h3>Chaudronnerie &amp; Tuyauterie</h3>
-                  <p>Cuves, réservoirs, échangeurs et réseaux de canalisations industrielles</p>
-                </div>
-              </ScrollReveal>
-              <ScrollReveal>
-                <div className="feature-item">
-                  <div className="feature-icon">&#9881;</div>
-                  <h3>Maintenance Industrielle</h3>
-                  <p>Maintenance préventive et curative pour les secteurs pétrolier, minier et agro-industriel</p>
-                </div>
-              </ScrollReveal>
-            </div>
-          </div>
-        </section>
-
-        <section className="section section-light">
-          <div className="container">
-            <ScrollReveal>
-              <div className="section-title">
-                <h2>Nos Services</h2>
-                <div className="line"></div>
-                <p>Des solutions complètes pour l'industrie et le génie civil</p>
-              </div>
-            </ScrollReveal>
-            <div className="services-grid">
-              {HOME_SERVICE_CARDS.map((card) => (
-                <ScrollReveal key={card.slug}>
-                  <div className="service-card">
-                    <img src={card.img} alt={card.title} loading="lazy" />
-                    <div className="service-card-body">
-                      <h3 dangerouslySetInnerHTML={{ __html: card.title }} />
-                      <p>{card.desc}</p>
-                      <Link href={`/${card.slug}`} className="btn">En savoir plus</Link>
+            {gallery.length > 0 ? (
+              <div className="gallery-grid">
+                {gallery.map((item: GalleryItem) => (
+                  <ScrollReveal key={item.id}>
+                    <div className="gallery-item">
+                      <img src={item.image} alt={item.title} loading="lazy" />
+                      {item.title && <div className="gallery-caption">{item.title}</div>}
                     </div>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
+                  </ScrollReveal>
+                ))}
+              </div>
+            ) : (
+              <p style={{ textAlign: "center", color: "var(--muted)" }}>Aucune image pour le moment.</p>
+            )}
           </div>
         </section>
 
