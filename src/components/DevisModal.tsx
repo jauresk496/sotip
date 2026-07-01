@@ -164,6 +164,26 @@ export default function DevisModal() {
       return;
     }
 
+    try {
+      await fetch('/api/devis', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: nom,
+          email,
+          phone: phone || null,
+          company: company || null,
+          project_type: projectType || null,
+          project_description: description,
+          budget: budget || null,
+          deadline: deadline || null,
+          attachments: attachmentUrls,
+        }),
+      });
+    } catch {
+      // Email failure should not block the user's success
+    }
+
     setFormSent(true);
     setLoading(false);
     setFiles([]);
