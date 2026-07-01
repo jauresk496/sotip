@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import ServiceSidebar from '@/components/ServiceSidebar';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import DevisButton from '@/components/DevisButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -49,15 +50,13 @@ export default async function DynamicPage({
                   )}
                   <p style={{ whiteSpace: 'pre-line' }}>{service.content}</p>
                   <div style={{ marginTop: '30px' }}>
-                    <Link href="/contact" className="btn">Demander un devis</Link>
+                    <DevisButton className="btn" />
                   </div>
                 </div>
                 <div className="content-sidebar">
                   <ServiceSidebar activeSlug={service.slug} />
                   <div style={{ marginTop: '20px' }}>
-                    <Link href="/contact" className="btn" style={{ width: '100%', justifyContent: 'center' }}>
-                      Demander un devis
-                    </Link>
+                    <DevisButton className="btn" style={{ width: '100%', justifyContent: 'center' }} />
                   </div>
                 </div>
               </div>
@@ -106,7 +105,7 @@ export default async function DynamicPage({
                     </div>
                   )}
                   <div style={{ marginTop: '30px' }}>
-                    <Link href="/contact" className="btn">Demander un devis</Link>
+                    <DevisButton className="btn" />
                   </div>
                 </div>
                 <div className="content-sidebar">
@@ -121,9 +120,7 @@ export default async function DynamicPage({
                     </ul>
                   </div>
                   <div style={{ marginTop: '20px' }}>
-                    <Link href="/contact" className="btn" style={{ width: '100%', justifyContent: 'center' }}>
-                      Demander un devis
-                    </Link>
+                    <DevisButton className="btn" style={{ width: '100%', justifyContent: 'center' }} />
                   </div>
                 </div>
               </div>

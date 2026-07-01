@@ -37,7 +37,12 @@ export default function Hero({ slides: propSlides }: { slides?: SlideItem[] }) {
             <p>
               Construction métallique, charpenterie, chaudronnerie, tuyauterie, génie civil et maintenance industrielle en Côte d'Ivoire.
             </p>
-            <Link href="/contact" className="btn">Demander un devis</Link>
+            <button
+              className="btn"
+              onClick={() => window.dispatchEvent(new Event('open-devis-modal'))}
+            >
+              Demander un devis
+            </button>
             <Link
               href="/entreprise"
               className="btn btn-outline"

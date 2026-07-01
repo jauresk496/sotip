@@ -40,6 +40,7 @@ export default function AdminShell({ children }: AdminShellProps) {
     { href: "/admin/gallery", label: "Galerie", icon: "bi-images" },
     { href: "/admin/slides", label: "Slides", icon: "bi-card-image" },
     { href: "/admin/partners", label: "Partenaires", icon: "bi-people" },
+    { href: "/admin/quotes", label: "Devis", icon: "bi-file-earmark-text" },
   ];
 
   const sysItems = [
@@ -90,6 +91,9 @@ export default function AdminShell({ children }: AdminShellProps) {
           </Link>
           <Link href="/admin/slides" className={`tb-tab${isActive("/admin/slides") ? " active" : ""}`}>
             Slides
+          </Link>
+          <Link href="/admin/quotes" className={`tb-tab${isActive("/admin/quotes") ? " active" : ""}`}>
+            Devis
           </Link>
         </nav>
         <div className="tb-right">

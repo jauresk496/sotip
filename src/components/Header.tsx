@@ -88,6 +88,15 @@ export default function Header({ settings }: { settings: Record<string, string> 
             >
               Contact
             </Link>
+            <button
+              className="nav-devis-btn"
+              onClick={() => {
+                setNavOpen(false);
+                window.dispatchEvent(new Event('open-devis-modal'));
+              }}
+            >
+              Demander un devis
+            </button>
           </nav>
         </div>
       </header>

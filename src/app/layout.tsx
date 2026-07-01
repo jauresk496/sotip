@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import DevisModal from '@/components/DevisModal';
 
 export const metadata: Metadata = {
   title: 'SOTIP-CI | Société de Travaux Industriels et de Prestation de Côte d\'Ivoire',
@@ -17,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body>{children}</body>
+      <body>{children}<DevisModal /></body>
     </html>
   );
 }

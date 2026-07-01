@@ -55,6 +55,22 @@ export interface ContactMessage {
   created_at: string;
 }
 
+export interface QuoteRequest {
+  id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  company: string | null;
+  project_type: string | null;
+  project_description: string;
+  budget: string | null;
+  deadline: string | null;
+  attachments: string[];
+  status: string;
+  is_read: boolean;
+  created_at: string;
+}
+
 export const SERVICE_LIST: { slug: string; title: string }[] = [
   { slug: 'construction-metallique', title: 'Construction métallique' },
   { slug: 'charpenterie-metallique', title: 'Charpenterie métallique' },
