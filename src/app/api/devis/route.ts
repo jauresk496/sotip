@@ -10,7 +10,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Champs obligatoires manquants' }, { status: 400 });
     }
 
-    const gmailUser = process.env.GMAIL_USER || 'contact.sotip.ci@gmail.com';
+    const gmailUser = process.env.GMAIL_USER || 'contact.sotipci@gmail.com';
     const gmailPass = process.env.GMAIL_APP_PASSWORD;
 
     if (!gmailPass) {
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 
     await transporter.sendMail({
       from: gmailUser,
-      to: 'contact.sotip.ci@gmail.com',
+      to: 'contact.sotipci@gmail.com',
       replyTo: email,
       subject: `Nouvelle demande de devis - ${name}${project_type ? ` (${project_type})` : ''}`,
       html,
