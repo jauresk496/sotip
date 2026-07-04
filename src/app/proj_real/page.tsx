@@ -17,9 +17,12 @@ export default async function ProjetsPage() {
     getProjects(),
   ]);
 
-  const orderedProjects = PROJECT_ORDER
-    .map((slug) => projects.find((p) => p.slug === slug))
-    .filter(Boolean);
+  const orderedProjects = [
+    ...PROJECT_ORDER
+      .map((slug) => projects.find((p) => p.slug === slug))
+      .filter(Boolean),
+    ...projects.filter((p) => !PROJECT_ORDER.includes(p.slug)),
+  ] as typeof projects;
 
   return (
     <>

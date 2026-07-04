@@ -2,6 +2,7 @@
 
 import { useState, useEffect, FormEvent } from "react";
 import AdminShell from "@/components/AdminShell";
+import ImageUpload from "@/components/ImageUpload";
 
 interface PartnerItem {
   slug: string;
@@ -124,13 +125,12 @@ export default function AdminPartnersPage() {
                     <input type="text" name="name" className="form-control" required defaultValue={editing.name} />
                   </div>
                   <div>
-                    <label className="form-label">Logo (URL)</label>
-                    <input type="text" name="image" className="form-control" defaultValue={editing.image || ""} />
-                    {editing.image && (
-                      <div style={{ marginTop: ".4rem" }}>
-                        <img src={editing.image} alt="" width={60} height={40} style={{ objectFit: "contain", border: "1px solid var(--line)", borderRadius: ".4rem" }} />
-                      </div>
-                    )}
+                    <ImageUpload
+                      name="image"
+                      value={editing.image || ""}
+                      onChange={(url) => setEditing({ ...editing, image: url })}
+                      label="Logo"
+                    />
                   </div>
                   <div>
                     <label className="form-label">Ordre d'affichage</label>
