@@ -14,6 +14,14 @@ export default async function EntreprisePage() {
   const settings = await getSettings();
   const contactAddress = settings.contact_address || 'MARCORY ANOUMABO Rue Bamba Kassoum';
 
+  const image = settings.entreprise_image || '/images/slide/1.jpg';
+  const title = settings.entreprise_title || 'Société de Travaux Industriels et de Prestation de Côte d\'Ivoire';
+  const text = (settings.entreprise_text || '').split('\n').filter(Boolean);
+  const statut = settings.entreprise_statut || 'SARL';
+  const effectif = settings.entreprise_effectif || 'Plus de 50 collaborateurs';
+  const managerName = settings.manager_name || 'M. Evrard YAO';
+  const managerRole = settings.manager_role || 'Directeur technique';
+
   return (
     <>
       <Header settings={settings} />
@@ -29,28 +37,22 @@ export default async function EntreprisePage() {
           <div className="container">
             <div className="grid">
               <div>
-                <img src="/images/slide/1.jpg" alt="SOTIP-CI - Bureau d'études" />
+                <img src={image} alt="SOTIP-CI - Bureau d'études" />
               </div>
               <div className="about-text">
-                <h2>Société de Travaux Industriels et de Prestation de Côte d'Ivoire</h2>
-                <p>
-                  Située en Côte d'Ivoire à Abidjan, SOTIP-CI est une Société à Responsabilité Limitée (SARL) spécialisée dans les domaines de la construction métallique et mixte, la charpenterie métallique, le graissage industriel, le génie civil, le calorifugeage, le sablage et peinture, la soudure, la chaudronnerie, la tuyauterie et la maintenance industrielle.
-                </p>
-                <p>
-                  Forte d'une équipe d'ingénieurs et de techniciens qualifiés, SOTIP-CI intervient sur l'ensemble des ouvrages métalliques, de la conception à la réalisation, en respectant les normes internationales les plus exigeantes.
-                </p>
-                <p>
-                  Nos interventions couvrent les secteurs pétrolier, minier, agro-industriel, industriel et commercial. La qualité, la sécurité et le respect des délais sont les valeurs fondamentales qui guident notre action au quotidien.
-                </p>
+                <h2>{title}</h2>
+                {text.map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
 
                 <div className="infos">
                   <div className="info-item">
                     <span className="info-label">Statut</span>
-                    <span className="info-value">SARL</span>
+                    <span className="info-value">{statut}</span>
                   </div>
                   <div className="info-item">
                     <span className="info-label">Effectif</span>
-                    <span className="info-value">Plus de 50 collaborateurs</span>
+                    <span className="info-value">{effectif}</span>
                   </div>
                   <div className="info-item">
                     <span className="info-label">Localisation</span>
@@ -58,7 +60,7 @@ export default async function EntreprisePage() {
                   </div>
                   <div className="info-item">
                     <span className="info-label">Direction</span>
-                    <span className="info-value"><a href="/manager">M. Evrard YAO</a>, Directeur technique</span>
+                    <span className="info-value"><a href="/manager">{managerName}</a>, {managerRole}</span>
                   </div>
                 </div>
               </div>

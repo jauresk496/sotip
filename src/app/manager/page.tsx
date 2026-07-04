@@ -12,6 +12,14 @@ export const metadata: Metadata = {
 export default async function ManagerPage() {
   const settings = await getSettings();
 
+  const image = settings.manager_image || '/images/slide/1.jpg';
+  const name = settings.manager_name || 'M. Evrard YAO';
+  const role = settings.manager_role || 'Directeur technique';
+  const bio = (settings.manager_bio || '').split('\n').filter(Boolean);
+  const experience = settings.manager_experience || '15+ ans dans l\'industrie';
+  const expertise = settings.manager_expertise || 'Construction métallique, maintenance industrielle';
+  const linkedin = settings.manager_linkedin || '';
+
   return (
     <>
       <Header settings={settings} />
@@ -27,42 +35,41 @@ export default async function ManagerPage() {
           <div className="container">
             <div className="grid">
               <div>
-                <img src="/images/slide/1.jpg" alt="SOTIP-CI - Direction" />
+                <img src={image} alt={`SOTIP-CI - ${name}`} />
               </div>
               <div className="about-text">
-                <h2>M. Evrard YAO</h2>
-                <p style={{ color: 'var(--secondary)', fontWeight: 600, fontSize: '1.1rem' }}>Directeur technique</p>
-                <p>
-                  Fort de plus de 15 ans d'expérience dans le domaine de la construction métallique et de la maintenance industrielle, M. Evrard YAO dirige SOTIP-CI avec la vision d'apporter des solutions industrielles de haute qualité en Côte d'Ivoire et dans la sous-région.
-                </p>
-                <p>
-                  Son leadership et son expertise technique sont les piliers sur lesquels repose la réputation d'excellence de SOTIP-CI.
-                </p>
+                <h2>{name}</h2>
+                <p style={{ color: 'var(--secondary)', fontWeight: 600, fontSize: '1.1rem' }}>{role}</p>
+                {bio.map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
 
                 <div className="infos" style={{ marginTop: '30px' }}>
                   <div className="info-item">
                     <span className="info-label">Fonction</span>
-                    <span className="info-value">Directeur technique</span>
+                    <span className="info-value">{role}</span>
                   </div>
                   <div className="info-item">
                     <span className="info-label">Expérience</span>
-                    <span className="info-value">15+ ans dans l'industrie</span>
+                    <span className="info-value">{experience}</span>
                   </div>
                   <div className="info-item">
                     <span className="info-label">Expertise</span>
-                    <span className="info-value">Construction métallique, maintenance industrielle</span>
+                    <span className="info-value">{expertise}</span>
                   </div>
                 </div>
-                <p style={{ marginTop: '20px' }}>
-                  <a
-                    href="https://ci.linkedin.com/in/evrard-yao-965ba3111"
-                    target="_blank"
-                    rel="noopener"
-                    className="btn btn-outline"
-                  >
-                    Voir le profil LinkedIn
-                  </a>
-                </p>
+                {linkedin && (
+                  <p style={{ marginTop: '20px' }}>
+                    <a
+                      href={linkedin}
+                      target="_blank"
+                      rel="noopener"
+                      className="btn btn-outline"
+                    >
+                      Voir le profil LinkedIn
+                    </a>
+                  </p>
+                )}
               </div>
             </div>
           </div>
