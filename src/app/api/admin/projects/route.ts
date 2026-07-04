@@ -33,10 +33,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'slug et title requis' }, { status: 400 });
     }
 
+    const cleanSlug = slug
+      .toLowerCase()
+      .trim()
+      .replace(/['']/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
     const payload: Record<string, unknown> = {
-      slug, title, page_title: page_title || '', description: description || '',
+      slug: cleanSlug, title, page_title: page_title || '', description: description || '',
       year: year || '', content: content || [], sidebar_title: sidebar_title || '',
-      sidebar_slug: sidebar_slug || slug, sort_order: sort_order ?? 0,
+      sidebar_slug: sidebar_slug || cleanSlug, sort_order: sort_order ?? 0,
     };
     if (card_image !== undefined) payload.card_image = card_image;
     if (main_image !== undefined) payload.main_image = main_image;
