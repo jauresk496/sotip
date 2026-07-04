@@ -6,6 +6,7 @@ import ServiceSidebar from '@/components/ServiceSidebar';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import DevisButton from '@/components/DevisButton';
+import ProjectGallery from '@/components/ProjectGallery';
 
 export const dynamic = 'force-dynamic';
 
@@ -92,18 +93,7 @@ export default async function DynamicPage({
                   {project.content && project.content.map((para, i) => (
                     <p key={i}>{para}</p>
                   ))}
-                  {project.slug === 'green' && (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '15px', marginTop: '20px' }}>
-                      {['01', '02', '03', '04'].map((n) => (
-                        <img
-                          key={n}
-                          src={`/realisation/images_green/${n}.jpg`}
-                          alt={`Réalisation ${n}`}
-                          style={{ borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)' }}
-                        />
-                      ))}
-                    </div>
-                  )}
+                  <ProjectGallery projectSlug={project.slug} />
                   <div style={{ marginTop: '30px' }}>
                     <DevisButton className="btn" />
                   </div>

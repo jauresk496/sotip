@@ -3,6 +3,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import AdminShell from "@/components/AdminShell";
 import ImageUpload from "@/components/ImageUpload";
+import ProjectGalleryEditor from "@/components/ProjectGalleryEditor";
 
 interface ProjectItem {
   slug: string;
@@ -189,6 +190,9 @@ export default function AdminProjectsPage() {
                   </div>
                 </div>
               </div>
+              {editing.slug && items.find(i => i.slug === editing.slug) && (
+                <ProjectGalleryEditor projectSlug={editing.slug} />
+              )}
               <div className="modal-foot">
                 <button type="button" className="btn-outline-sotip" onClick={() => setEditing(null)}>Annuler</button>
                 <button type="submit" className="btn-sotip" disabled={saving}>
