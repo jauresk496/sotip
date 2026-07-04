@@ -2,6 +2,7 @@
 
 import { useState, useEffect, FormEvent } from "react";
 import AdminShell from "@/components/AdminShell";
+import ImageUpload from "@/components/ImageUpload";
 
 interface ServiceItem {
   slug: string;
@@ -19,6 +20,7 @@ export default function AdminServicesPage() {
   const [msg, setMsg] = useState("");
   const [error, setError] = useState("");
   const [editing, setEditing] = useState<Partial<ServiceItem> | null>(null);
+  const [serviceImage, setServiceImage] = useState("");
 
   async function load() {
     try {
@@ -34,10 +36,12 @@ export default function AdminServicesPage() {
   useEffect(() => { load(); }, []);
 
   function openCreate() {
+    setServiceImage("");
     setEditing({ slug: "", title: "", intro: "", content: "", image: "", sort_order: 0 });
   }
 
   function openEdit(item: ServiceItem) {
+    setServiceImage(item.image || "");
     setEditing({ ...item });
   }
 
@@ -53,7 +57,7 @@ export default function AdminServicesPage() {
       title: form.get("title") as string,
       intro: form.get("intro") as string,
       content: form.get("content") as string,
-      image: form.get("image") as string || null,
+      image: serviceImage || null,
       sort_order: parseInt(form.get("sort_order") as string) || 0,
     };
 
@@ -136,8 +140,12 @@ export default function AdminServicesPage() {
                     <textarea name="content" className="form-control" rows={5} defaultValue={editing.content || ""} />
                   </div>
                   <div>
-                    <label className="form-label">Image (URL)</label>
-                    <input type="text" name="image" className="form-control" defaultValue={editing.image || ""} />
+                    <ImageUpload
+                      name="image"
+                      value={serviceImage}
+                      onChange={setServiceImage}
+                      label="Image du service"
+                    />
                   </div>
                   <div>
                     <label className="form-label">Ordre d'affichage</label>
