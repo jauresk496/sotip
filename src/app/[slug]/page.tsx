@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import DevisButton from '@/components/DevisButton';
 import ProjectGallery from '@/components/ProjectGallery';
+import ServiceGallery from '@/components/ServiceGallery';
 
 export const dynamic = 'force-dynamic';
 
@@ -50,6 +51,7 @@ export default async function DynamicPage({
                     <img src={`/${service.image}`} alt={service.title} />
                   )}
                   <p style={{ whiteSpace: 'pre-line' }}>{service.content}</p>
+                  <ServiceGallery serviceSlug={service.slug} />
                   <div style={{ marginTop: '30px' }}>
                     <DevisButton className="btn" />
                   </div>

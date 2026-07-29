@@ -3,6 +3,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import AdminShell from "@/components/AdminShell";
 import ImageUpload from "@/components/ImageUpload";
+import ServiceGalleryEditor from "@/components/ServiceGalleryEditor";
 
 interface ServiceItem {
   slug: string;
@@ -153,6 +154,9 @@ export default function AdminServicesPage() {
                   </div>
                 </div>
               </div>
+              {editing.slug && items.find(i => i.slug === editing.slug) && (
+                <ServiceGalleryEditor serviceSlug={editing.slug} />
+              )}
               <div className="modal-foot">
                 <button type="button" className="btn-outline-sotip" onClick={() => setEditing(null)}>Annuler</button>
                 <button type="submit" className="btn-sotip" disabled={saving}>
