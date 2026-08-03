@@ -68,20 +68,6 @@ export default async function EntreprisePage() {
           </div>
         </section>
 
-        <section className="mon-espace-banner">
-          <div className="container">
-            <div className="mon-espace-inner">
-              <div>
-                <h2>Espace Gestionnaire</h2>
-                <p>Accédez à vos documents administratifs (Bon de Caisse, Reçu, Bon de Sortie) en ligne.</p>
-              </div>
-              <a href="/mon-espace/login" className="btn btn-sotip">
-                Mon Espace &rarr;
-              </a>
-            </div>
-          </div>
-        </section>
-
         <section className="section section-light">
           <div className="container">
             <ScrollReveal>
