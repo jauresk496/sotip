@@ -14,6 +14,7 @@ export default function GestionShell({ children }: { children: React.ReactNode }
     { href: "/mon-espace/bon_caisse", label: "Bon de Caisse", icon: "bi-cash-stack" },
     { href: "/mon-espace/recu", label: "Reçu", icon: "bi-receipt" },
     { href: "/mon-espace/bon_sortie", label: "Bon de Sortie", icon: "bi-box-arrow-right" },
+    { href: "/mon-espace/devis", label: "Devis", icon: "bi-file-earmark-text" },
   ];
 
   const isActive = (href: string) => {

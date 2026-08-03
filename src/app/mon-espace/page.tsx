@@ -13,6 +13,14 @@ interface GestionDoc {
   created_at: string;
 }
 
+interface QuoteRequest {
+  id: string;
+  name: string;
+  status: string;
+  is_read: boolean;
+  created_at: string;
+}
+
 const DOC_TYPES = [
   { type: "bon_caisse", label: "Bon de Caisse", icon: "bi-cash-stack", color: "#a0c83c", desc: "Entrées et sorties de caisse" },
   { type: "recu", label: "Reçu", icon: "bi-receipt", color: "#1e5a78", desc: "Reçus de paiement clients" },
@@ -21,13 +29,19 @@ const DOC_TYPES = [
 
 export default function MonEspaceDashboard() {
   const [docs, setDocs] = useState<GestionDoc[]>([]);
+  const [quotes, setQuotes] = useState<QuoteRequest[]>([]);
   const [loading, setLoading] = useState(true);
 
   const load = useCallback(async () => {
     try {
-      const res = await fetch("/api/admin/gestion");
-      const data = await res.json();
-      setDocs(Array.isArray(data) ? data : []);
+      const [resDocs, resQuotes] = await Promise.all([
+        fetch("/api/admin/gestion"),
+        fetch("/api/admin/quotes"),
+      ]);
+      const docsData = await resDocs.json();
+      const quotesData = await resQuotes.json();
+      setDocs(Array.isArray(docsData) ? docsData : []);
+      setQuotes(Array.isArray(quotesData) ? quotesData : []);
     } catch { /* ignore */ }
     setLoading(false);
   }, []);
@@ -82,6 +96,40 @@ export default function MonEspaceDashboard() {
             </div>
           </div>
         ))}
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1rem", marginBottom: "1.5rem" }}>
+        <div className="adm-card" style={{ borderTop: "4px solid #d4760a" }}>
+          <div className="adm-card-body" style={{ padding: "1.25rem 1.5rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: ".8rem", marginBottom: ".8rem" }}>
+              <div style={{
+                width: 44, height: 44, borderRadius: ".65rem",
+                background: "#d4760a18", color: "#d4760a",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "1.3rem",
+              }}>
+                <i className="bi bi-file-earmark-text"></i>
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: "1rem" }}>Demandes de devis</div>
+                <div style={{ fontSize: ".78rem", color: "var(--muted)" }}>Demandes clients reçues via le site</div>
+              </div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: "1.6rem", fontWeight: 800, color: "var(--ink)" }}>
+                {loading ? "…" : quotes.length}
+                {quotes.filter(q => !q.is_read).length > 0 && (
+                  <span style={{ fontSize: ".75rem", fontWeight: 700, color: "#a0c83c", marginLeft: ".5rem" }}>
+                    · {quotes.filter(q => !q.is_read).length} non lue{quotes.filter(q => !q.is_read).length > 1 ? "s" : ""}
+                  </span>
+                )}
+              </span>
+              <Link href="/mon-espace/devis" className="btn-sotip" style={{ padding: ".35rem .8rem", fontSize: ".78rem", textDecoration: "none" }}>
+                Voir
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="adm-card">
