@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -8,14 +8,6 @@ export default function MonEspaceLogin() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showSetup, setShowSetup] = useState(false);
-
-  useEffect(() => {
-    fetch("/api/mon-espace/setup")
-      .then(r => r.json())
-      .then(d => setShowSetup(!d.configured))
-      .catch(() => setShowSetup(false));
-  }, []);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -70,12 +62,6 @@ export default function MonEspaceLogin() {
         </div>
         <div className="login-back">
           <Link href="/">&larr; Retour au site</Link>
-          {showSetup && (
-            <>
-              <span style={{ margin: "0 8px", color: "#ccc" }}>|</span>
-              <Link href="/mon-espace/setup">Première connexion ?</Link>
-            </>
-          )}
         </div>
       </div>
     </div>

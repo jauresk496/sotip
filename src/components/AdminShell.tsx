@@ -47,6 +47,7 @@ export default function AdminShell({ children }: AdminShellProps) {
 
   const sysItems = [
     { href: "/admin/settings", label: "Paramètres", icon: "bi-gear" },
+    { href: "/admin/gestionnaire", label: "Compte Gestionnaire", icon: "bi-person-gear" },
   ];
 
   const isActive = (href: string) => {
