@@ -21,7 +21,7 @@ body.admin-body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont
 
 .topbar{position:fixed;top:0;left:0;right:0;height:var(--tb-h);z-index:300;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 1.4rem;gap:1.4rem}
 .tb-brand{display:flex;align-items:center;gap:.65rem;min-width:var(--sb-w)}
-.tb-brand img{width:38px;height:38px;object-fit:contain}
+.tb-brand img{height:46px;width:auto;object-fit:contain}
 .tb-wordmark{font-size:1.18rem;font-weight:800;color:var(--navy);letter-spacing:-.02em}
 .tb-wordmark b{color:var(--green-hover)}
 .tb-burger{border:none;background:transparent;color:var(--muted);font-size:1.3rem;cursor:pointer;display:none;margin-left:auto}
