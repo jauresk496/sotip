@@ -22,4 +22,4 @@ CREATE POLICY "gestion_documents_public_delete"
 CREATE INDEX IF NOT EXISTS idx_gestion_documents_type ON public.gestion_documents(doc_type);
 CREATE INDEX IF NOT EXISTS idx_gestion_documents_created ON public.gestion_documents(created_at DESC);
 
--- gestion_documents migration SQL
+-- gestion_documents migration SQL (applied to database 2026-08-03)
