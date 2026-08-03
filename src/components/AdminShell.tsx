@@ -79,7 +79,6 @@ export default function AdminShell({ children }: AdminShellProps) {
       <header className="topbar">
         <div className="tb-brand">
           <img src="/images/sotipci-logo.png" alt="SOTIP-CI" />
-          <span className="tb-wordmark">SOTIP-<b>CI</b></span>
         </div>
         <nav className="tb-nav">
           <Link href="/admin" className={`tb-tab${isActive("/admin") ? " active" : ""}`}>
