@@ -1485,6 +1485,13 @@ ul { list-style: none; }
   min-height: 26px;
   height: 26px;
 }
+.doc-titre-row {
+  font-weight: 800;
+  text-transform: uppercase;
+  background: #eef4d9;
+  border-top: 1.5px solid #111 !important;
+  letter-spacing: .5px;
+}
 .doc-nota { margin-top: 24px; font-size: 10.5pt; }
 
 .doc-times,

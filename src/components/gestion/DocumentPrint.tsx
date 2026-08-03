@@ -3,6 +3,7 @@ interface DocData {
 }
 
 interface SortieItem {
+  type?: "item" | "titre";
   designation: string;
   quantite: string;
   destination: string;
@@ -221,12 +222,18 @@ export function BonSortiePrint({ data, docNumber }: { data: DocData; docNumber: 
         </thead>
         <tbody>
           {filled.map((item, i) => (
-            <tr key={i}>
-              <td>{item.designation || "\u00A0"}</td>
-              <td>{item.quantite || "\u00A0"}</td>
-              <td>{item.destination || "\u00A0"}</td>
-              <td>{item.observations || "\u00A0"}</td>
-            </tr>
+            item.type === "titre" ? (
+              <tr key={i}>
+                <td colSpan={4} className="doc-titre-row">{item.designation || "\u00A0"}</td>
+              </tr>
+            ) : (
+              <tr key={i}>
+                <td>{item.designation || "\u00A0"}</td>
+                <td>{item.quantite || "\u00A0"}</td>
+                <td>{item.destination || "\u00A0"}</td>
+                <td>{item.observations || "\u00A0"}</td>
+              </tr>
+            )
           ))}
         </tbody>
       </table>

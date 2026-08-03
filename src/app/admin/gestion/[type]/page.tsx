@@ -15,6 +15,7 @@ interface GestionDoc {
 }
 
 interface SortieItem {
+  type?: "item" | "titre";
   designation: string;
   quantite: string;
   destination: string;
@@ -57,7 +58,7 @@ const EMPTY_BON_SORTIE: Record<string, unknown> = {
   date: new Date().toISOString().slice(0, 10),
   nom_emetteur: "",
   service: "",
-  items: [{ designation: "", quantite: "", destination: "", observations: "" }] as SortieItem[],
+  items: [{ type: "item", designation: "", quantite: "", destination: "", observations: "" }] as SortieItem[],
 };
 
 const EMPTY_BY_TYPE: Record<string, Record<string, unknown>> = {
@@ -127,7 +128,13 @@ export default function GestionTypePage() {
 
   function addItem() {
     const items = [...((form.items as SortieItem[]) || [])];
-    items.push({ designation: "", quantite: "", destination: "", observations: "" });
+    items.push({ type: "item", designation: "", quantite: "", destination: "", observations: "" });
+    setForm(prev => ({ ...prev, items }));
+  }
+
+  function addTitre() {
+    const items = [...((form.items as SortieItem[]) || [])];
+    items.push({ type: "titre", designation: "", quantite: "", destination: "", observations: "" });
     setForm(prev => ({ ...prev, items }));
   }
 
@@ -422,31 +429,49 @@ export default function GestionTypePage() {
                         </thead>
                         <tbody>
                           {((form.items as SortieItem[]) || []).map((item, i) => (
-                            <tr key={i}>
-                              <td style={{ border: "1px solid #e2e8f0", padding: ".2rem" }}>
-                                <input type="text" className="form-control" value={item.designation} onChange={e => setItem(i, "designation", e.target.value)} style={{ border: "none" }} />
-                              </td>
-                              <td style={{ border: "1px solid #e2e8f0", padding: ".2rem" }}>
-                                <input type="text" className="form-control" value={item.quantite} onChange={e => setItem(i, "quantite", e.target.value)} style={{ border: "none" }} />
-                              </td>
-                              <td style={{ border: "1px solid #e2e8f0", padding: ".2rem" }}>
-                                <input type="text" className="form-control" value={item.destination} onChange={e => setItem(i, "destination", e.target.value)} style={{ border: "none" }} />
-                              </td>
-                              <td style={{ border: "1px solid #e2e8f0", padding: ".2rem" }}>
-                                <input type="text" className="form-control" value={item.observations} onChange={e => setItem(i, "observations", e.target.value)} style={{ border: "none" }} />
-                              </td>
-                              <td style={{ border: "1px solid #e2e8f0", textAlign: "center" }}>
-                                <button type="button" onClick={() => removeItem(i)} style={{ background: "none", border: "none", color: "#a11a1a", cursor: "pointer" }}>
-                                  <i className="bi bi-x-lg"></i>
-                                </button>
-                              </td>
-                            </tr>
+                            item.type === "titre" ? (
+                              <tr key={i} style={{ background: "#eef4d9" }}>
+                                <td colSpan={4} style={{ border: "1px solid #e2e8f0", padding: ".2rem" }}>
+                                  <input type="text" className="form-control" value={item.designation} onChange={e => setItem(i, "designation", e.target.value)} style={{ border: "none", fontWeight: 700 }} placeholder="Titre de section (ex: Matériel de soudure)" />
+                                </td>
+                                <td style={{ border: "1px solid #e2e8f0", textAlign: "center" }}>
+                                  <button type="button" onClick={() => removeItem(i)} style={{ background: "none", border: "none", color: "#a11a1a", cursor: "pointer" }}>
+                                    <i className="bi bi-x-lg"></i>
+                                  </button>
+                                </td>
+                              </tr>
+                            ) : (
+                              <tr key={i}>
+                                <td style={{ border: "1px solid #e2e8f0", padding: ".2rem" }}>
+                                  <input type="text" className="form-control" value={item.designation} onChange={e => setItem(i, "designation", e.target.value)} style={{ border: "none" }} />
+                                </td>
+                                <td style={{ border: "1px solid #e2e8f0", padding: ".2rem" }}>
+                                  <input type="text" className="form-control" value={item.quantite} onChange={e => setItem(i, "quantite", e.target.value)} style={{ border: "none" }} />
+                                </td>
+                                <td style={{ border: "1px solid #e2e8f0", padding: ".2rem" }}>
+                                  <input type="text" className="form-control" value={item.destination} onChange={e => setItem(i, "destination", e.target.value)} style={{ border: "none" }} />
+                                </td>
+                                <td style={{ border: "1px solid #e2e8f0", padding: ".2rem" }}>
+                                  <input type="text" className="form-control" value={item.observations} onChange={e => setItem(i, "observations", e.target.value)} style={{ border: "none" }} />
+                                </td>
+                                <td style={{ border: "1px solid #e2e8f0", textAlign: "center" }}>
+                                  <button type="button" onClick={() => removeItem(i)} style={{ background: "none", border: "none", color: "#a11a1a", cursor: "pointer" }}>
+                                    <i className="bi bi-x-lg"></i>
+                                  </button>
+                                </td>
+                              </tr>
+                            )
                           ))}
                         </tbody>
                       </table>
-                      <button type="button" className="btn-outline-sotip" onClick={addItem} style={{ marginTop: ".5rem", padding: ".35rem .8rem", fontSize: ".8rem" }}>
-                        <i className="bi bi-plus-lg"></i> Ajouter une ligne
-                      </button>
+                      <div style={{ display: "flex", gap: ".5rem", marginTop: ".5rem" }}>
+                        <button type="button" className="btn-outline-sotip" onClick={addItem} style={{ padding: ".35rem .8rem", fontSize: ".8rem" }}>
+                          <i className="bi bi-plus-lg"></i> Ajouter une ligne
+                        </button>
+                        <button type="button" className="btn-outline-sotip" onClick={addTitre} style={{ padding: ".35rem .8rem", fontSize: ".8rem" }}>
+                          <i className="bi bi-type-bold"></i> Ajouter un titre
+                        </button>
+                      </div>
                     </div>
                   </>
                 )}
