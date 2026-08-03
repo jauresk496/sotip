@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
-import { getSession } from '@/lib/auth';
+import { getSession, getGestionSession } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
 
 async function checkAuth() {
-  const valid = await getSession();
-  if (!valid) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
+  const adminValid = await getSession();
+  const gestionValid = await getGestionSession();
+  if (!adminValid && !gestionValid) {
+    return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
+  }
   return null;
 }
 
