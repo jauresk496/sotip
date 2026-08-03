@@ -1306,7 +1306,7 @@ ul { list-style: none; }
   font-size: 7pt;
   font-style: italic;
   color: #333;
-  max-width: 220px;
+  white-space: nowrap;
 }
 .doc-header-right { text-align: left; }
 .doc-slogan {
@@ -1429,8 +1429,15 @@ ul { list-style: none; }
 .doc-signatures {
   display: flex;
   justify-content: space-between;
-  margin-top: 46px;
+  margin-top: 80px;
   font-size: 10.5pt;
+}
+.doc-footer-contact {
+  margin-top: 40px;
+  padding-top: 8px;
+  border-top: 1px solid #cfd8de;
+  font-size: 8pt;
+  color: #333;
 }
 .doc-signatures-2 { justify-content: space-between; }
 .doc-sig { min-width: 160px; text-align: left; }

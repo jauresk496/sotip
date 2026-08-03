@@ -36,7 +36,6 @@ function DocHeader() {
     <div className="doc-header">
       <div className="doc-header-left">
         <img src="/images/sotipci-logo.png" alt="SOTIP-CI" className="doc-logo" />
-        <div className="doc-logo-sub">S.A.R.L.</div>
         <div className="doc-logo-tag">Société de travaux Industriels et de prestation de Côte d'Ivoire</div>
       </div>
       <div className="doc-header-right">
@@ -52,23 +51,24 @@ function DocHeader() {
   );
 }
 
-function DocContactLine() {
+function DocGreenLine() {
+  return <div className="doc-green-line"></div>;
+}
+
+function DocFooterContact() {
   return (
-    <>
-      <div className="doc-contact">
-        Marcory Anoumabo au palmier non loin de l'hôpital de sans fil, rue Bamba Kassoum - Cel: (+225) 07 48 26 95 74 / 07 48 09 80 09<br />
-        E-mail: contact.sotipci@gmail.com - sotipcicontact@gmail.com / www.sotipci.com
-      </div>
-      <div className="doc-green-line"></div>
-    </>
+    <div className="doc-contact doc-footer-contact">
+      Marcory Anoumabo au palmier non loin de l'hôpital de sans fil, rue Bamba Kassoum - Cel: (+225) 07 48 26 95 74 / 07 48 09 80 09<br />
+      E-mail: contact.sotipci@gmail.com - sotipcicontact@gmail.com / www.sotipci.com
+    </div>
   );
 }
 
 export function BonCaissePrint({ data, docNumber }: { data: DocData; docNumber: string }) {
   return (
-    <div className="doc-sheet">
+    <div className="doc-sheet doc-times">
       <DocHeader />
-      <DocContactLine />
+      <DocGreenLine />
       <div className="doc-title-row">
         <h1 className="doc-title">BON DE CAISSE</h1>
         <div className="doc-date-box">
@@ -122,6 +122,7 @@ export function BonCaissePrint({ data, docNumber }: { data: DocData; docNumber: 
         <div className="doc-sig"><em>COMPTABILITÉ</em></div>
         <div className="doc-sig"><em>DIRECTION</em></div>
       </div>
+      <DocFooterContact />
     </div>
   );
 }
@@ -188,11 +189,10 @@ export function BonSortiePrint({ data, docNumber }: { data: DocData; docNumber: 
   }
 
   return (
-    <div className="doc-sheet">
+    <div className="doc-sheet doc-times">
       <div className="doc-header doc-header-bordered">
         <div className="doc-header-left">
           <img src="/images/sotipci-logo.png" alt="SOTIP-CI" className="doc-logo" />
-          <div className="doc-logo-sub">S.A.R.L.</div>
           <div className="doc-logo-tag">Société de travaux Industriels et de prestation de Côte d'Ivoire</div>
         </div>
         <h1 className="doc-title" style={{ margin: 0 }}>BON DE SORTIE</h1>
