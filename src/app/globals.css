@@ -1429,7 +1429,7 @@ ul { list-style: none; }
 .doc-signatures {
   display: flex;
   justify-content: space-between;
-  margin-top: 80px;
+  margin-top: 46px;
   font-size: 10.5pt;
 }
 .doc-footer-contact {
