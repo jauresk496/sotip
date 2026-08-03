@@ -65,6 +65,7 @@ export default function Header({ settings }: { settings: Record<string, string> 
               <div className="dropdown">
                 <Link href="/entreprise" onClick={() => setNavOpen(false)}>Entreprise</Link>
                 <Link href="/manager" onClick={() => setNavOpen(false)}>Manager</Link>
+                <Link href="/mon-espace/login" onClick={() => setNavOpen(false)}>Mon Espace</Link>
               </div>
             </div>
             <Link
