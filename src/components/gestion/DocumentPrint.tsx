@@ -128,11 +128,10 @@ export function BonCaissePrint({ data, docNumber }: { data: DocData; docNumber: 
 
 export function RecuPrint({ data, docNumber }: { data: DocData; docNumber: string }) {
   return (
-    <div className="doc-sheet doc-sheet-small">
+    <div className="doc-sheet doc-sheet-small doc-times">
       <div className="doc-header">
         <div className="doc-header-left">
           <img src="/images/sotipci-logo.png" alt="SOTIP-CI" className="doc-logo" />
-          <div className="doc-logo-sub">S.A.R.L.</div>
           <div className="doc-logo-tag">Société de travaux Industriels et de prestation de Côte d'Ivoire</div>
           <div className="doc-contact-small">
             Cel: (+225) 07 48 26 95 74 / 07 48 09 80 09<br />

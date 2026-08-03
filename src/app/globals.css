@@ -1480,6 +1480,13 @@ ul { list-style: none; }
 }
 .doc-nota { margin-top: 24px; font-size: 10.5pt; }
 
+.doc-times,
+.doc-times .doc-title,
+.doc-times .doc-amount-currency,
+.doc-times .doc-table th {
+  font-family: 'Times New Roman', Times, serif;
+}
+
 @media print {
   .no-print { display: none !important; }
   body { background: #fff !important; }
