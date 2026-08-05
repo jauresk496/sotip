@@ -32,7 +32,15 @@ export async function PATCH(request: Request) {
     const body = await request.json();
     const { id, status, is_read } = body;
 
-    if (!id) return NextResponse.json({ error: 'id requis' }, { status: 400 });
+    if (!id || typeof id !== 'string') return NextResponse.json({ error: 'id requis' }, { status: 400 });
+
+    const ALLOWED_STATUS = ['new', 'reviewed', 'responded', 'archived'];
+    if (status !== undefined && !ALLOWED_STATUS.includes(status)) {
+      return NextResponse.json({ error: 'Statut invalide' }, { status: 400 });
+    }
+    if (is_read !== undefined && typeof is_read !== 'boolean') {
+      return NextResponse.json({ error: 'is_read invalide' }, { status: 400 });
+    }
 
     const payload: Record<string, unknown> = {};
     if (status !== undefined) payload.status = status;

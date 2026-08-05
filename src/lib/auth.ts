@@ -3,7 +3,14 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { supabase } from './supabase';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'sotip-ci-jwt-secret-change-in-production';
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    if (process.env.VERCEL) throw new Error('JWT_SECRET doit être défini en production');
+    return 'sotip-ci-jwt-secret-dev-only';
+  }
+  return secret;
+}
 const COOKIE_NAME = 'admin_session';
 const GESTION_COOKIE_NAME = 'gestion_session';
 const BRUTE_FORCE_KEY = 'admin_brute_force';
@@ -108,7 +115,7 @@ export async function verifyAdmin(username: string, password: string): Promise<{
 }
 
 export async function createSession(): Promise<string> {
-  const token = jwt.sign({ role: 'admin', ts: Date.now() }, JWT_SECRET, { expiresIn: '24h' });
+  const token = jwt.sign({ role: 'admin', ts: Date.now() }, getJwtSecret(), { expiresIn: '24h' });
   return token;
 }
 
@@ -117,8 +124,8 @@ export async function getSession(): Promise<boolean> {
   const token = cookieStore.get(COOKIE_NAME)?.value;
   if (!token) return false;
   try {
-    jwt.verify(token, JWT_SECRET);
-    return true;
+    const decoded = jwt.verify(token, getJwtSecret()) as { role?: string };
+    return decoded?.role === 'admin';
   } catch {
     return false;
   }
@@ -199,7 +206,7 @@ export async function verifyGestionnaire(username: string, password: string): Pr
 }
 
 export async function createGestionSession(): Promise<string> {
-  return jwt.sign({ role: 'gestion', ts: Date.now() }, JWT_SECRET, { expiresIn: '24h' });
+  return jwt.sign({ role: 'gestion', ts: Date.now() }, getJwtSecret(), { expiresIn: '24h' });
 }
 
 export async function getGestionSession(): Promise<boolean> {
@@ -207,7 +214,7 @@ export async function getGestionSession(): Promise<boolean> {
   const token = cookieStore.get(GESTION_COOKIE_NAME)?.value;
   if (!token) return false;
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { role?: string };
+    const decoded = jwt.verify(token, getJwtSecret()) as { role?: string };
     return decoded?.role === 'gestion' || decoded?.role === 'admin';
   } catch { return false; }
 }

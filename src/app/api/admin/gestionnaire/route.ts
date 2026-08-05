@@ -31,8 +31,12 @@ export async function POST(request: Request) {
   try {
     const { username, password } = await request.json();
 
-    if (!username) {
+    if (!username || typeof username !== 'string' || username.length > 100) {
       return NextResponse.json({ error: 'Identifiant requis' }, { status: 400 });
+    }
+
+    if (password && (typeof password !== 'string' || password.length > 200)) {
+      return NextResponse.json({ error: 'Mot de passe invalide' }, { status: 400 });
     }
 
     const upsert = (key: string, value: string) =>
@@ -41,21 +45,23 @@ export async function POST(request: Request) {
     const { error: err1 } = await upsert('gestion_username', username);
 
     if (err1) {
-      return NextResponse.json({ error: 'Erreur: ' + err1.message }, { status: 500 });
+      console.error('Erreur upsert gestion_username:', err1);
+      return NextResponse.json({ error: 'Erreur lors de l\'enregistrement' }, { status: 500 });
     }
 
     if (password && password.length >= 8) {
       const hash = await bcrypt.hash(password, 12);
       const { error: err2 } = await upsert('gestion_password_hash', hash);
       if (err2) {
-        return NextResponse.json({ error: 'Erreur: ' + err2.message }, { status: 500 });
+        console.error('Erreur upsert gestion_password_hash:', err2);
+        return NextResponse.json({ error: 'Erreur lors de l\'enregistrement' }, { status: 500 });
       }
     } else if (password && password.length > 0) {
       return NextResponse.json({ error: 'Le mot de passe doit faire au moins 8 caractères' }, { status: 400 });
     }
 
     return NextResponse.json({ success: true, message: 'Compte gestionnaire enregistré.' });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || 'Erreur serveur' }, { status: 500 });
+  } catch {
+    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
   }
 }

@@ -59,6 +59,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'doc_type et data requis' }, { status: 400 });
     }
 
+    if (!PREFIX[doc_type]) {
+      return NextResponse.json({ error: 'doc_type invalide' }, { status: 400 });
+    }
+
+    if (status && !['valide', 'brouillon', 'annule'].includes(status)) {
+      return NextResponse.json({ error: 'status invalide' }, { status: 400 });
+    }
+
     const payload: Record<string, unknown> = {
       doc_type,
       data,

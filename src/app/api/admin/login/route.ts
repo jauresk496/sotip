@@ -4,7 +4,7 @@ import { verifyAdmin, createSession } from '@/lib/auth';
 export async function POST(request: Request) {
   try {
     const { username, password } = await request.json();
-    if (!username || !password) {
+    if (!username || !password || typeof username !== 'string' || typeof password !== 'string' || username.length > 100 || password.length > 200) {
       return NextResponse.json({ error: 'Identifiant et mot de passe requis' }, { status: 400 });
     }
 

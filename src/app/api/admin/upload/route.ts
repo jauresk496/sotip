@@ -14,9 +14,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Aucun fichier fourni' }, { status: 400 });
     }
 
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
     if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ error: 'Type de fichier non autorisé. Formats: JPG, PNG, WebP, GIF, SVG.' }, { status: 400 });
+      return NextResponse.json({ error: 'Type de fichier non autorisé. Formats: JPG, PNG, WebP, GIF.' }, { status: 400 });
+    }
+
+    const allowedExts = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+    const fileExt = file.name.split('.').pop()?.toLowerCase() || '';
+    if (!allowedExts.includes(fileExt)) {
+      return NextResponse.json({ error: 'Extension de fichier non autorisée.' }, { status: 400 });
     }
 
     const maxSize = 5 * 1024 * 1024; // 5 MB
@@ -24,8 +30,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Fichier trop volumineux. Taille max: 5 MB.' }, { status: 400 });
     }
 
-    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${ext}`;
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
     const filePath = `projects/${fileName}`;
 
     const { error: uploadError } = await supabase.storage
